@@ -1,19 +1,19 @@
 {
-  "name": "n8n-nodes-<...>",
+  "name": "n8n-nodes-readability",
   "version": "0.1.0",
-  "description": "",
+  "description": "n8n node to extract readable content from HTML using Mozilla Readability",
   "keywords": [
     "n8n-community-node-package"
   ],
   "license": "MIT",
-  "homepage": "",
+  "homepage": "https://github.com/TechupBusiness/n8n-nodes-readability",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Techup Business",
+    "email": "info@techupbusiness.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-<...>.git"
+    "url": "https://github.com/TechupBusiness/n8n-nodes-readability.git"
   },
   "engines": {
     "node": ">=18.10",
@@ -35,22 +35,22 @@
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
-    "credentials": [
-      "dist/credentials/ExampleCredentialsApi.credentials.js",
-      "dist/credentials/HttpBinApi.credentials.js"
-    ],
     "nodes": [
-      "dist/nodes/ExampleNode/ExampleNode.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js"
+      "dist/nodes/Readability/Readability.node.js"
     ]
   },
   "devDependencies": {
     "@typescript-eslint/parser": "^7.15.0",
     "eslint": "^8.56.0",
+    "@types/jsdom": "^21.1.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.1",
     "gulp": "^4.0.2",
     "prettier": "^3.3.2",
     "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "@mozilla/readability": "^0.6.0",
+    "jsdom": "^22.1.0"
   },
   "peerDependencies": {
     "n8n-workflow": "*"
