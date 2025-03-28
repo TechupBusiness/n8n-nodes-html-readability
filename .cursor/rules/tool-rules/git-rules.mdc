@@ -1,6 +1,6 @@
 ---
-description:
-globs:
+description: Used when user indicates they want to update saved changes in git (commit etc)
+globs: 
 alwaysApply: false
 ---
 
@@ -8,7 +8,7 @@ alwaysApply: false
 
 ## Context
 
-Used when user indicates they want to update all saved changes in git
+Used when user indicates they want to update saved changes in git (commit etc)
 
 ## Critical Rules
 
