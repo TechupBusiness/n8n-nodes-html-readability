@@ -12,10 +12,10 @@ Used when user indicates they want to update saved changes in git (commit etc)
 
 ## Critical Rules
 
-- Run `git reset` first to clean the stage
-- Run command `git add .` from the root of the workspace
+- Run command `git add .` from the root of the workspace and then `git status`
 - Review all added changes that will be included in the commit
 - Split into several commits according to a subject (thematically fitting changes should be committed together)
+- Run `git reset` first to clean the stage before any `git add File1 File2` operations
 - Use format for title: `type: brief description` - keep it brief and descriptive (max 72 chars)
 - Add an empty line after commit title
 - Include short paragraph summary of gist of what and why the change is being made
