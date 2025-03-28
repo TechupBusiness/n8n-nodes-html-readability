@@ -1,4 +1,4 @@
-import { IExecuteFunctions, INodeExecutionData, INodeType, INodeTypeDescription, NodeConnectionType } from 'n8n-workflow';
+import { IExecuteFunctions, INodeExecutionData, INodeType, INodeTypeDescription, NodeConnectionType, NodeOperationError } from 'n8n-workflow';
 import { JSDOM } from 'jsdom';
 import { Readability as MozillaReadability } from '@mozilla/readability';
 
@@ -55,14 +55,14 @@ export class Readability implements INodeType {
 					{
 						name: 'Extract Content',
 						value: 'extract',
-						description: 'Extract readable content from HTML',
+						description: 'Wether to extract readable content from HTML',
 						action: 'Extract readable content from HTML',
 					},
 				],
 				default: 'extract',
 			},
 			{
-				displayName: 'JSON property',
+				displayName: 'JSON Property',
 				name: 'htmlField',
 				type: 'string',
 				default: 'html',
@@ -94,7 +94,7 @@ export class Readability implements INodeType {
 						name: 'continueOnFail',
 						type: 'boolean',
 						default: false,
-						description: 'Continue with execution even when the node encounters an error',
+						description: 'Whether to continue with execution even when the node encounters an error',
 					},
 					{
 						displayName: 'Return Full Response',
@@ -130,7 +130,7 @@ export class Readability implements INodeType {
 				try {
 					const item = items[i];
 					if (!item?.json) {
-						throw new Error(`Item ${i} has no JSON data`);
+						throw new NodeOperationError(this.getNode(), `Item ${i} has no JSON data`);
 					}
 
 					// Get htmlField for each item to support expressions that might change per item
@@ -159,7 +159,7 @@ export class Readability implements INodeType {
 					}
 
 					if (!htmlContent) {
-						throw new Error(`No HTML found in field "${htmlField}" for item ${i}`);
+						throw new NodeOperationError(this.getNode(), `No HTML found in field "${htmlField}" for item ${i}`);
 					}
 
 					const dom = new JSDOM(htmlContent);
@@ -167,7 +167,7 @@ export class Readability implements INodeType {
 					const article = reader.parse() as ReadabilityArticle | null;
 
 					if (!article) {
-						throw new Error('Failed to extract content');
+						throw new NodeOperationError(this.getNode(), 'Failed to extract content');
 					}
 
 					if (options.fullResponse) {
