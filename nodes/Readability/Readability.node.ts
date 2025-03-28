@@ -62,7 +62,7 @@ export class Readability implements INodeType {
 				default: 'extract',
 			},
 			{
-				displayName: 'HTML Field',
+				displayName: 'JSON property',
 				name: 'htmlField',
 				type: 'string',
 				default: 'html',
@@ -73,7 +73,8 @@ export class Readability implements INodeType {
 						operation: ['extract'],
 					},
 				},
-				description: 'The name of the field containing the HTML content',
+				description: 'The name of the JSON property containing the HTML content to parse (supports dot notation and expressions)',
+				noDataExpression: false,
 			},
 			{
 				displayName: 'Options',
@@ -120,25 +121,48 @@ export class Readability implements INodeType {
 		const operation = this.getNodeParameter('operation', 0) as string;
 
 		if (resource === 'html' && operation === 'extract') {
-			const htmlField = this.getNodeParameter('htmlField', 0) as string;
-			const options = this.getNodeParameter('options', 0, {}) as {
-				continueOnFail?: boolean;
-				fullResponse?: boolean;
-			};
-
 			for (let i = 0; i < items.length; i++) {
+				const options = this.getNodeParameter('options', i, {}) as {
+					continueOnFail?: boolean;
+					fullResponse?: boolean;
+				};
+
 				try {
 					const item = items[i];
 					if (!item?.json) {
 						throw new Error(`Item ${i} has no JSON data`);
 					}
 
-					const html = item.json[htmlField] as string;
-					if (!html) {
+					// Get htmlField for each item to support expressions that might change per item
+					const htmlField = this.getNodeParameter('htmlField', i) as string;
+
+					// Handle both expression results and dot notation
+					let htmlContent: any;
+					
+					// First check if the field contains a direct value from an expression
+					if (typeof htmlField === 'string' && htmlField.includes('.')) {
+						// Handle dot notation
+						const pathParts = htmlField.split('.');
+						htmlContent = item.json;
+						
+						for (const part of pathParts) {
+							if (htmlContent && typeof htmlContent === 'object' && part in htmlContent) {
+								htmlContent = htmlContent[part];
+							} else {
+								htmlContent = undefined;
+								break;
+							}
+						}
+					} else {
+						// Direct value (either from expression or simple field)
+						htmlContent = item.json[htmlField];
+					}
+
+					if (!htmlContent) {
 						throw new Error(`No HTML found in field "${htmlField}" for item ${i}`);
 					}
 
-					const dom = new JSDOM(html);
+					const dom = new JSDOM(htmlContent);
 					const reader = new MozillaReadability(dom.window.document);
 					const article = reader.parse() as ReadabilityArticle | null;
 
