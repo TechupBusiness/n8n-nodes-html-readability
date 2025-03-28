@@ -12,24 +12,23 @@ Used when user indicates they want to update saved changes in git (commit etc)
 
 ## Critical Rules
 
-- Run the command `git add .` from the root of the workspace
+- Run `git reset` first to clean the stage
+- Run command `git add .` from the root of the workspace
 - Review all added changes that will be included in the commit
+- Split into several commits according to a subject (thematically fitting changes should be committed together)
 - Use format for title: `type: brief description` - keep it brief and descriptive (max 72 chars)
-- Add two line breaks after commit title
-- Include short paragraph summary of gist of what and why the change is being made and end with " -Agent Generated Commit Message"
+- Add an empty line after commit title
+- Include short paragraph summary of gist of what and why the change is being made
 - Push all to the remote current branch
 
 ## Examples
 
 <example>
-doc: explain recent rules changes in cursor
-
-Updated the readme to include a better diagram showing rules workflow, while
-also adding more sample rules to show rule folder organization. Specifically, notice that the change to `.cursor/rules/*folders` include readme.md files also to aid in understanding the folders purpose for human developers. AI gets its understanding from `.cursor/rules/rule-generating-agent.mdc` instead.
-
--Agent Generated Commit Message
+git reset && git add SPECIFIC-FILE1 file2 && git commit -m "[FEATURE] Add Cursor rules and templates" -m "" -m "- Added comprehensive set of Cursor rules for AI assistance" -m "- Introduced new templates for architecture, PRD, and stories" -m "- Added `.gitignore` rules for the new files"
 </example>
 
 <example type="invalid">
 fixed stuff
 </example>
+
+
