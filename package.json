@@ -31,7 +31,13 @@
     "prepublishOnly": "pnpm build && pnpm lint -c .eslintrc.prepublish.js nodes credentials package.json"
   },
   "files": [
-    "dist"
+    "dist/nodes/Readability/**/*.js",
+    "dist/nodes/Readability/**/*.d.ts",
+    "dist/nodes/Readability/**/*.json",
+    "dist/nodes/Readability/**/*.svg",
+    "dist/package.json",
+    "LICENSE.md",
+    "README.md"
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
