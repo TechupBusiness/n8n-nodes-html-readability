@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-html-readability",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "n8n node to extract readable content from HTML using Mozilla Readability",
   "keywords": [
     "n8n-community-node-package"
