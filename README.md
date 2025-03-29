@@ -1,6 +1,6 @@
 ![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
 
-# n8n-nodes-readability
+# n8n-nodes-html-readability
 
 This is an n8n community node. It lets you use Mozilla's Readability in your n8n workflows.
 
