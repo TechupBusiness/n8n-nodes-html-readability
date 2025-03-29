@@ -24,7 +24,9 @@
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "build": "tsc && gulp build:icons",
-    "dev": "tsc --watch",
+    "dev:setup": "pnpm run build && npm link && mkdir -p ~/.n8n/custom && cd ~/.n8n/custom && npm link n8n-nodes-html-readability",
+    "dev": "pnpm run dev:setup && echo '\n🚀 Setup complete! Now:\n1. Start debugging in VS Code (F5) to run n8n\n2. Open http://localhost:5678 in your browser\n3. Search for \"Readability\" in the nodes panel' && tsc --watch",
+    "watch": "tsc --watch",
     "format": "prettier nodes --write",
     "lint": "eslint nodes package.json",
     "lintfix": "eslint nodes package.json --fix",
@@ -34,10 +36,7 @@
     "dist/nodes/Readability/**/*.js",
     "dist/nodes/Readability/**/*.d.ts",
     "dist/nodes/Readability/**/*.json",
-    "dist/nodes/Readability/**/*.svg",
-    "dist/package.json",
-    "LICENSE.md",
-    "README.md"
+    "dist/nodes/Readability/**/*.svg"
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
@@ -46,9 +45,9 @@
     ]
   },
   "devDependencies": {
+    "@types/jsdom": "^21.1.0",
     "@typescript-eslint/parser": "^7.15.0",
     "eslint": "^8.56.0",
-    "@types/jsdom": "^21.1.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.1",
     "gulp": "^4.0.2",
     "prettier": "^3.3.2",
