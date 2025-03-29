@@ -1,0 +1,10 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Remember:
+- Use web search if you are not sure
+- Check the available n8n docs in cursor
+- The method this.getNodeParameter('fieldname', i) returns the content which is either the fixed value or parsed expression result and is ready to use
+  

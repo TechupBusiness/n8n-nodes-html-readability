@@ -1,34 +1,100 @@
 ---
-description: Used when user indicates they want to update saved changes in git (commit etc)
-globs: 
+description: If the user wants to commit, save, or push changes, use this rule for proper git workflow
+globs:
 alwaysApply: false
 ---
+# Git Workflow Rules
 
-# Git Push Manual Rule
+## Purpose
+This rule defines the exact workflow to follow when the user wants to commit changes to git.
 
-## Context
+## Workflow Steps
 
-Used when user indicates they want to update saved changes in git (commit etc)
+### Step 1: Review Changes First
+```bash
+git add .
+git status | cat
+git reset
+```
+**Important**: Always start by reviewing changes, then reset to commit files selectively.
 
-## Critical Rules
+### Step 2: Examine Complete Diff
+```bash
+git diff | cat
+```
+**Critical**: Always examine the complete diff to:
+- Get a holistic view of all changes in the workspace
+- Identify related changes across multiple files
+- Determine logical groupings for commits
+- Understand the overall impact of the changes
+- Create accurate commit messages based on actual changes
+- Identify any unintended changes or debugging code
 
-- Run command `git add .` from the root of the workspace and then `git status`
-- Review all added changes that will be included in the commit
-- Split into several commits according to a subject (thematically fitting changes should be committed together)
-- Run `git reset` first to clean the stage before any `git add File1 File2` operations
-- Use format for title: `type: brief description` - keep it brief and descriptive (max 72 chars)
-- Add an empty line after commit title
-- Include short paragraph summary of gist of what and why the change is being made
-- Push all to the remote current branch
+### Step 3: Split Changes into Logical Commits
+- Group related files in the same commit
+- Keep unrelated changes in separate commits
+- File moves (deletion + creation) must be in the same commit
+- Each commit should represent one logical change
+
+### Step 4: Commit Format
+
+#### Commit Title Format
+```
+[TYPE] brief description
+```
+Where:
+- TYPE must be one of: FEATURE, REFACTOR, CLEANUP, CHANGE, BUGFIX, UPGRADE, DOCS
+- Description must be under 72 characters
+- First word should be lowercase unless it's a proper noun
+- No period at the end of the title
+
+#### Commit Message Structure
+```bash
+git commit -m "[TYPE] brief description" -m "" -m "- Detail point 1" -m "- Detail point 2" -m "- Detail point 3"
+```
+
+**Rules for commit messages:**
+- Always include 2 newlines after the title (use -m "")
+- Use bullet points with hyphen (-) for each detail
+- Start each bullet with a capital letter
+- Explain what AND why the change was made
+- Explicitly mention any breaking changes
+- Keep total message under 500 characters
+
+### Step 5: Command Formatting
+- Use multiple `-m` options for multiline messages
+- Append `| cat` to any interactive command (git log, git status, etc.)
+- Never use editors like vim/nano in commands
 
 ## Examples
 
-<example>
-git reset && git add SPECIFIC-FILE1 file2 && git commit -m "[FEATURE] Add Cursor rules and templates" -m "" -m "- Added comprehensive set of Cursor rules for AI assistance" -m "- Introduced new templates for architecture, PRD, and stories" -m "- Added `.gitignore` rules for the new files"
-</example>
+### ✅ Valid Commit Workflow
+```bash
+# Step 1: Review changes first
+git add .
+git status | cat
+git reset
 
-<example type="invalid">
-fixed stuff
-</example>
+# Step 2: Examine complete diff to understand all changes
+git diff | cat
 
+# Step 3-4: Commit files by logical groups
+git add path/to/feature/files
+git commit -m "[FEATURE] implement user authentication" -m "" -m "- Added login form component" -m "- Created authentication service" -m "- Added route guards for protected pages"
 
+git add path/to/docs
+git commit -m "[DOCS] update API documentation" -m "" -m "- Added missing endpoints" -m "- Fixed incorrect parameter descriptions"
+```
+
+### ❌ Invalid Commit Workflow
+```bash
+# Wrong: Committing everything at once without review
+git add .
+git commit -m "changes"
+
+# Wrong: Missing type prefix and details
+git commit -m "fixed login page"
+
+# Wrong: No empty line after title and no bullet points
+git commit -m "[BUGFIX] fix login page" -m "Fixed the login page by updating the form validation"
+```
