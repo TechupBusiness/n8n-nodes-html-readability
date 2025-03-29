@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug n8n community node",
+            "skipFiles": ["<node_internals>/**"],
+            "runtimeExecutable": "n8n",
+            "args": ["start"],
+            "env": {
+                "EXECUTIONS_PROCESS": "main"
+            },
+            "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+            "sourceMaps": true,
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
