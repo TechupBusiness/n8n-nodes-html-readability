@@ -1,19 +1,19 @@
 {
-  "name": "n8n-nodes-readability",
+  "name": "n8n-nodes-html-readability",
   "version": "0.1.0",
   "description": "n8n node to extract readable content from HTML using Mozilla Readability",
   "keywords": [
     "n8n-community-node-package"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/TechupBusiness/n8n-nodes-readability",
+  "homepage": "https://github.com/TechupBusiness/n8n-nodes-html-readability",
   "author": {
     "name": "Techup Business",
     "email": "info@techupbusiness.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/TechupBusiness/n8n-nodes-readability.git"
+    "url": "https://github.com/TechupBusiness/n8n-nodes-html-readability.git"
   },
   "engines": {
     "node": ">=18.10",
