@@ -135,8 +135,10 @@ Replace `patch` with `minor` or `major` as appropriate.
 
 ### CI Setup (one-time)
 
-1. Generate an npm access token at [npmjs.com](https://www.npmjs.com/settings/~/tokens)
-2. Add it as a repository secret named `NPM_TOKEN` in GitHub (Settings > Secrets and variables > Actions)
+Publishing uses [npm OIDC Trusted Publishing](https://docs.npmjs.com/trusted-publishers) — no long-lived tokens to rotate.
+
+1. Go to your package on [npmjs.com](https://www.npmjs.com/package/n8n-nodes-html-readability) > **Settings** > **Trusted Publishers**
+2. Add a GitHub Actions publisher with repository `TechupBusiness/n8n-nodes-html-readability` and workflow `publish.yml`
 
 ## Resources
 
