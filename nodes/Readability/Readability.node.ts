@@ -105,6 +105,7 @@ export class Readability implements INodeType {
 						json: {
 							...article,
 						},
+						pairedItem: { item: i },
 					});
 				} else {
 					returnData.push({
@@ -113,11 +114,15 @@ export class Readability implements INodeType {
 							title: article.title,
 							excerpt: article.excerpt,
 						},
+						pairedItem: { item: i },
 					});
 				}
 			} catch (error) {
 				if (errorHandling === 'passThrough') {
-					returnData.push(items[i]);
+					returnData.push({
+						...items[i],
+						pairedItem: { item: i },
+					});
 					continue;
 				}
 				if (errorHandling === 'outputEmpty') {
@@ -127,6 +132,7 @@ export class Readability implements INodeType {
 							title: '',
 							excerpt: '',
 						},
+						pairedItem: { item: i },
 					});
 					continue;
 				}
