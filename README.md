@@ -12,6 +12,8 @@ Mozilla's Readability is a standalone version of the algorithm used by Firefox R
 [Operations](#operations)  
 [Compatibility](#compatibility)  
 [Usage](#usage)  
+[Development](#development)  
+[Releasing](#releasing)  
 [Resources](#resources)  
 
 ## Installation
@@ -82,6 +84,59 @@ This example shows how to extract readable content from a webpage:
    - Set "JSON Property" to "data"
    - Enable "Return Full Response" if you need metadata
 3. The node will output clean HTML content and metadata
+
+## Development
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) v18.10+
+- [pnpm](https://pnpm.io/) v9.1+
+
+### Setup
+
+```bash
+pnpm install
+```
+
+### Build
+
+```bash
+pnpm build
+```
+
+### Local Testing with n8n
+
+```bash
+pnpm dev
+```
+
+This builds the node, links it into your local n8n installation, and starts watching for changes.
+
+### Linting & Formatting
+
+```bash
+pnpm lint        # check for issues
+pnpm lintfix     # auto-fix issues
+pnpm format      # format with prettier
+```
+
+## Releasing
+
+Releases are automated via GitHub Actions. When a version tag is pushed, CI builds the package and publishes it to npm.
+
+### Release a new version
+
+```bash
+pnpm version patch   # bumps version, commits, and creates a git tag
+git push --follow-tags
+```
+
+Replace `patch` with `minor` or `major` as appropriate.
+
+### CI Setup (one-time)
+
+1. Generate an npm access token at [npmjs.com](https://www.npmjs.com/settings/~/tokens)
+2. Add it as a repository secret named `NPM_TOKEN` in GitHub (Settings > Secrets and variables > Actions)
 
 ## Resources
 
